@@ -1,4 +1,4 @@
-name: macOS with 3.9-3.11
+name: macOS with 3.11-3.13
 
 on: [push, pull_request]
 
@@ -8,21 +8,21 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [macos-latest]
+        os: [macos-12, macos-14]
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Build wheels
-        uses: pypa/cibuildwheel@v2.11.1
+        uses: pypa/cibuildwheel@v2.18.2
         env:
-          CIBW_BUILD: cp39-macosx_x86_64 cp310-macosx_x86_64 cp311-macosx_x86_64
+          CIBW_BUILD: cp311-* cp312-* cp313-*
           # gmp already installed on macos runner
           CIBW_BEFORE_ALL_MACOS: >
             python -m pip install wheel &&
             python setup.py package_assemble
           CIBW_TEST_COMMAND: python -m regina.test
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           path: ./wheelhouse/*.whl
