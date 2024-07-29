@@ -81,13 +81,17 @@ def runTest(testName, testFile):
         output = re.subn(r'__new__\(\*args, \*\*kwargs\) class method of pybind11_builtins.pybind11_object',
                          r'__new__(*args, **kwargs) from pybind11_builtins.pybind11_type',
                          output)[0]
-                           
+
+    # For Python 3.12, there are trailing whitespace issues, so we
+    # normalize.
+    baseline = [line.strip() for line in baseline.split('\n')]
+    output = [line.strip() for line in output.split('\n')]
     if output != baseline:
         failed += "Difference between baseline and output:\n"
         failed += '\n'.join(
             difflib.context_diff(
-                baseline.split('\n'),
-                output.split('\n'),
+                baseline,
+                output,
                 fromfile = os.path.basename(testFile),
                 tofile = 'OUTPUT'))
 
