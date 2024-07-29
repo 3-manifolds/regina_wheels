@@ -20,7 +20,11 @@ jobs:
           # gmp already installed on macos runner
           CIBW_BEFORE_ALL_MACOS: >
             python -m pip install wheel setuptools &&
-            python setup.py package_assemble
+            python setup.py package_assemble &&
+            ln -s /opt/homebrew/opt/gmp/include/gmp.h extinclude &&
+            ln -s /opt/homebrew/opt/gmp/include/gmpxx.h extinclude &&
+            ln -s /opt/homebrew/opt/gmp/lib/libgmp.a extlib &&
+            ln -s /opt/homebrew/opt/gmp/lib/libgmpxx.a extlib
           CIBW_TEST_COMMAND: python -m regina.test
 
       - uses: actions/upload-artifact@v4
