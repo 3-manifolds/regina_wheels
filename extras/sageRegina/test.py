@@ -79,7 +79,7 @@ def runTest(testName, testFile):
         output = re.subn(r'(\s*)Methods( inherited from pybind11_object:)',
                          r'\1Static methods\2', output)[0]
         output = re.subn(r'__new__\(\*args, \*\*kwargs\) class method of pybind11_builtins.pybind11_object',
-                         r'__new__\(\*args, \*\*kwargs\) from pybind11_builtins.pybind11_type',
+                         r'__new__(*args, **kwargs) from pybind11_builtins.pybind11_type',
                          output)[0]
                            
     if output != baseline:
