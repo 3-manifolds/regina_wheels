@@ -1,0 +1,11 @@
+extlib/libgmp*
+extlib/pkgconfig
+extinclude/gmp*.h
+gmp-*tar.bz2
+gmp_src/
+PKG-INFO
+build/
+dist/
+libxml2-2.9.3/
+regina_*/
+tokyocabinet-1.4.48/
