@@ -8,9 +8,8 @@ goal here is to provide self-contained binaries ("wheels") of Regina's
 Python package that can be installed in seconds from Python's `PyPI`_
 package repository using ``pip``.
 
-The current version is somewhat experimental and is based on a
-pre-release version of Regina; it is offered for macOS (10.14 and
-newer) and Linux, but not Windows. To try it out, do::
+It is offered for macOS (10.15 and newer) and Linux, but not
+Windows. To try it out, do::
 
   python3 -m pip install --user --upgrade "regina>=7.0"
   python3 -m regina.test
