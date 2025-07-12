@@ -371,8 +371,9 @@ class package_checkout_regina(SystemCommand):
         ]
 
 class package_patch_regina(SystemCommand):
+    target_dir = 'legacy' if sys.version_info < (3, 12) else 'modern'
     system_commands = [
-        'cd regina_*; cp preconfig/pypi/regina-config.h engine/',
+        'cd regina_*; cp preconfig/pypi_' + target_dir + '/regina-config.h engine/',
         'cd regina_*; git apply ../patches/regina.diff'
         ]
 
