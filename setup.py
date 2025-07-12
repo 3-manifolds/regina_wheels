@@ -14,7 +14,7 @@
 #
 # TODO: extras/regina/engine/regina-config.h still needs to be updated
 # manually to reflect REGINA/SNAPPY version.
-# 
+#
 # Needed downgrade from boost 1.60 to boost 1.59 to not have
 # missing to_python converter for NContainer.getFirstTreeChild()
 #
@@ -41,7 +41,7 @@ if sys.platform == 'darwin':
     arch = platform.machine()
     os.environ['_PYTHON_HOST_PLATFORM'] = 'macosx-10.15-%s'%arch
     os.environ['ARCHFLAGS']='-arch %s'%arch
-    
+
 # Some of this is copied from SnapPy
 
 # Without the next line, we get an error even though we never
@@ -130,7 +130,7 @@ libraries = [
 def check_dimension(file_name):
     """
     Returns false for files such as "Foo9.cpp" or "Foo10.cpp", ...
-    
+
     Used to compile regina without high-dimension support
     (>8 dimensions).
     """
@@ -168,7 +168,7 @@ def regina_predicate(file_path):
         # directory which we should not include to avoid clashes
 
         file_name_base, ext = os.path.splitext(file_name)
-        
+
         return not ('nmz_' in file_name_base)
 
     if library_name == 'tons':
@@ -211,7 +211,7 @@ regina_extension = Extension(
     libraries = ['gmp','gmpxx','m', 'bz2'],
     library_dirs = ['extlib'],
 
-    # Adding bz2 to the libraries gives a command like 
+    # Adding bz2 to the libraries gives a command like
     # g++ .... -lbz2 -lboost_iostreams_regina ...
     #
     # boost_iostreams_regina needs symbols from bz2 but g++ won't
@@ -254,7 +254,7 @@ def my_build_libraries(self, libraries):
             include_dirs=include_dirs,
             debug=self.debug,
             extra_postargs = build_info.get('extra_compile_args'))
-        
+
         # Now "link" the object files together into a static library.
         # (On Unix at least, this isn't really linking -- it just
         # builds an archive.  Whatever.)
@@ -336,7 +336,7 @@ class package_download_tokyocabinet(SystemCommand):
 
 class package_download_libxml(SystemCommand):
     system_commands = ['cd /tmp; curl -O %s' % libxml_uri]
-    
+
 class package_download(CompoundCommand):
     commands = [
         'package_download_tokyocabinet',
@@ -371,10 +371,20 @@ class package_checkout_regina(SystemCommand):
         ]
 
 class package_patch_regina(SystemCommand):
-    target_dir = 'legacy' if sys.version_info < (3, 12) else 'modern'
+    if sys.version_info < (3, 12):
+        target_dir = 'legacy'
+        pybind_dir = 'pybind11_v2'
+        pybind_unused = 'pybind11_v3'
+    else:
+        target_dir = 'modern'
+        pybind_dir = 'pybind11_v3'
+        pybind_unused = 'pybind11_v2'
+
     system_commands = [
         'cd regina_*; cp preconfig/pypi_' + target_dir + '/regina-config.h engine/',
-        'cd regina_*; git apply ../patches/regina.diff'
+        'cd regina_*; git apply ../patches/regina.diff',
+        'cd regina_*/python; mv ' + pybind_dir + '/pybind11 .',
+        'cd regina_*/python; rm -rf ' + pybind_unused,
         ]
 
 class package_retrieve_tokyocabinet(CompoundCommand):
@@ -443,7 +453,7 @@ class package_tar(SystemCommand):
     else:
         # Mac
         transform_op = '-'
-        
+
     system_commands = [
         ('COPYFILE_DISABLE=1 '
          'tar -czf %s.tar.gz '
@@ -548,7 +558,7 @@ setup(name = 'regina',
            'Operating System :: POSIX :: Linux',
            'Operating System :: MacOS :: MacOS X',
            'Programming Language :: C',
-           'Programming Language :: C++', 
+           'Programming Language :: C++',
            'Programming Language :: Python',
            'Programming Language :: Cython',
            'Topic :: Scientific/Engineering :: Mathematics',
