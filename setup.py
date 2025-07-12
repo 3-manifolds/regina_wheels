@@ -373,19 +373,21 @@ class package_checkout_regina(SystemCommand):
 class package_patch_regina(SystemCommand):
     if sys.version_info < (3, 12):
         target_dir = 'legacy'
-        pybind_dir = 'pybind11_v2'
-        pybind_unused = 'pybind11_v3'
+        suffix = 'v2'
+        unused_suffix = 'v3'
     else:
         target_dir = 'modern'
-        pybind_dir = 'pybind11_v3'
-        pybind_unused = 'pybind11_v2'
+        suffix = 'v3'
+        unused_suffix = 'v2'
 
     system_commands = [
         'cd regina_*; cp preconfig/pypi_' + target_dir + '/regina-config.h engine/',
         'cd regina_*; git apply ../patches/regina.diff',
-        'cd regina_*/python; mv ' + pybind_dir + '/pybind11 .',
-        'cd regina_*/python; rm -rf ' + pybind_unused,
+        'cd regina_*/python; mv pybind11_' + suffix + '/pybind11 .',
+        'cd regina_*/python; rm -rf pybind11_' + unused_suffix,
         'cd regina_*/python/testsuite; rm -rf basic*.cpp',
+        'cd regina_*/python/testsuite; mv docstrings.out.' + suffix + ' docstrings.out',
+        'cd regina_*/python/testsuite; mv repr.out.' + suffix + ' repr.out',
         ]
 
 class package_retrieve_tokyocabinet(CompoundCommand):
