@@ -385,6 +385,7 @@ class package_patch_regina(SystemCommand):
         'cd regina_*; git apply ../patches/regina.diff',
         'cd regina_*/python; mv ' + pybind_dir + '/pybind11 .',
         'cd regina_*/python; rm -rf ' + pybind_unused,
+        'cd regina_*/python/testsuite; rm -rf basic*.cpp',
         ]
 
 class package_retrieve_tokyocabinet(CompoundCommand):
