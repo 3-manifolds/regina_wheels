@@ -7,8 +7,11 @@ jobs:
     name: Build wheels on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
+      fail-fast: false
       matrix:
-        os: [ubuntu-latest]
+        os: [ubuntu-24.04, ubuntu-24.04-arm]
+        # python_version: [38, 39, 310, 311, 312, 313]
+        python_version: [312]
 
     steps:
       - uses: actions/checkout@v4
@@ -17,7 +20,7 @@ jobs:
         uses: pypa/cibuildwheel@v2.23.3
         env:
           CIBW_PRERELEASE_PYTHONS: True
-          CIBW_BUILD: cp311-manylinux_x86_64 cp312-manylinux_x86_64 cp313-manylinux_x86_64
+          CIBW_BUILD: cp${{ matrix.python_version }}-manylinux*
           CIBW_BEFORE_ALL_LINUX: >
             yum install -y gmp-devel zlib-devel bzip2-devel &&
             python setup.py package_assemble
