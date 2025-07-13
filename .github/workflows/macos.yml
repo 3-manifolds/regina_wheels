@@ -10,7 +10,8 @@ jobs:
       fail-fast: false
       matrix:
         os: [macos-13, macos-14]
-        python_version: [38, 39, 310, 311, 312, 313]
+        # python_version: [38, 39, 310, 311, 312, 313]
+        python_version: [38]
 
     steps:
       - uses: actions/checkout@v4
@@ -18,7 +19,7 @@ jobs:
       - name: Build wheels
         uses: pypa/cibuildwheel@v2.23.3
         env:
-          CIBW_PRERELEASE_PYTHONS: True
+          CIBW_PRERELEASE_PYTHONS: False
           CIBW_BUILD: cp${{ matrix.python_version }}-*
           CIBW_BEFORE_ALL_MACOS: >
             python -m pip install wheel setuptools &&
@@ -28,5 +29,5 @@ jobs:
 
       - uses: actions/upload-artifact@v4
         with:
-          name: ${{ matrix.os }}-wheels-newer
+          name: ${{ matrix.os }}-cp${{ python_version }}-wheel
           path: ./wheelhouse/*.whl

@@ -9,3 +9,4 @@ dist/
 libxml2-2.9.3/
 regina_*/
 tokyocabinet-1.4.48/
+regina.egg-info/

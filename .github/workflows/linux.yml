@@ -11,7 +11,7 @@ jobs:
       matrix:
         os: [ubuntu-24.04, ubuntu-24.04-arm]
         # python_version: [38, 39, 310, 311, 312, 313]
-        python_version: [312]
+        python_version: [38]
 
     steps:
       - uses: actions/checkout@v4
@@ -19,7 +19,8 @@ jobs:
       - name: Build wheels
         uses: pypa/cibuildwheel@v2.23.3
         env:
-          CIBW_PRERELEASE_PYTHONS: True
+          CIBW_ARCHS: auto64
+          CIBW_PRERELEASE_PYTHONS: False
           CIBW_BUILD: cp${{ matrix.python_version }}-manylinux*
           CIBW_BEFORE_ALL_LINUX: >
             yum install -y gmp-devel zlib-devel bzip2-devel &&
@@ -29,4 +30,5 @@ jobs:
 
       - uses: actions/upload-artifact@v4
         with:
+          name: ${{ matrix.os }}-cp${{ python_version }}-wheel
           path: ./wheelhouse/*.whl
