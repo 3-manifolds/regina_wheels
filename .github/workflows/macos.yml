@@ -21,7 +21,7 @@ jobs:
         env:
           CIBW_PRERELEASE_PYTHONS: False
           CIBW_BUILD: cp${{ matrix.python_version }}-*
-          CIBW_BEFORE_ALL_MACOS: >
+          CIBW_BEFORE_BUILD: >
             python -m pip install wheel setuptools &&
             python setup.py package_assemble &&
             bash build_gmp.sh
