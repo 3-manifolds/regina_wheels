@@ -29,5 +29,5 @@ jobs:
 
       - uses: actions/upload-artifact@v4
         with:
-          name: ${{ matrix.os }}-cp${{ python_version }}-wheel
+          name: ${{ matrix.os }}-cp${{ matrix.python_version }}-wheel
           path: ./wheelhouse/*.whl
