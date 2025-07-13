@@ -19,7 +19,7 @@ jobs:
         uses: pypa/cibuildwheel@v2.23.3
         env:
           CIBW_PRERELEASE_PYTHONS: True
-          CIBW_BUILD: cp${{ matrix.python_version }}
+          CIBW_BUILD: cp${{ matrix.python_version }}-*
           CIBW_BEFORE_ALL_MACOS: >
             python -m pip install wheel setuptools &&
             python setup.py package_assemble &&
