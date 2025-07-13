@@ -390,7 +390,7 @@ class package_patch_regina(SystemCommand):
         'cd regina_*/python/testsuite; mv repr.out.' + suffix + ' repr.out',
         ]
 
-    if sys.platform == 'darwin' and target_dir == legacy:
+    if sys.platform == 'darwin' and target_dir == 'legacy':
         system_commands += ['rm regina_*/python/pybind11/subinterpreter.h']
 
 class package_retrieve_tokyocabinet(CompoundCommand):
