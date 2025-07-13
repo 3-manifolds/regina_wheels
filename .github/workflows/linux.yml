@@ -23,7 +23,8 @@ jobs:
           CIBW_BUILD: cp${{ matrix.python_version }}-manylinux*
           CIBW_BEFORE_ALL_LINUX: >
             yum install -y gmp-devel zlib-devel bzip2-devel
-          CIBW_BEFORE_BUILD_LINUX:
+          CIBW_BEFORE_BUILD_LINUX: >
+            python -m pip install wheel setuptools &&
             python setup.py package_assemble
           CIBW_REPAIR_WHEEL_COMMAND_LINUX: auditwheel repair -w {dest_dir} {wheel}
           CIBW_TEST_COMMAND: python -m regina.test
