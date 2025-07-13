@@ -1,4 +1,4 @@
-name: Linux with 3.11-3.13
+name: Linux
 
 on: [push, pull_request]
 

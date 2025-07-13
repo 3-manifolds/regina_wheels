@@ -1,4 +1,4 @@
-name: macOS with 3.11-3.13
+name: macOS
 
 on: [push, pull_request]
 
@@ -10,6 +10,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [macos-13, macos-14]
+        python_version: [38, 39, 310, 311, 312, 313]
 
     steps:
       - uses: actions/checkout@v4
@@ -18,7 +19,7 @@ jobs:
         uses: pypa/cibuildwheel@v2.23.3
         env:
           CIBW_PRERELEASE_PYTHONS: True
-          CIBW_BUILD: cp312-* cp313-*
+          CIBW_BUILD: cp${{ matrix.python_version }}
           CIBW_BEFORE_ALL_MACOS: >
             python -m pip install wheel setuptools &&
             python setup.py package_assemble &&
