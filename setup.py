@@ -195,15 +195,11 @@ regina_extension = Extension(
     sources = (
         recursive_glob(regina_dir + '/engine', 'cpp', depth = 2,
                        predicate = regina_predicate) +
-        # Needed to be renamed .cpp for it to work
-#        recursive_glob(regina_dir + '/engine/snappea/kernel', 'cpp') +
-#        recursive_glob(regina_dir + '/engine/snappea/snappy', 'cpp') +
         recursive_glob(regina_dir + '/python', 'cpp', depth = 1,
                        predicate = regina_python_predicate)),
     include_dirs = [
             regina_dir + '/engine',
             regina_dir + '/python',
-            'extras/regina/engine',
             'extinclude',
         ] + library_include_dirs(libraries),
     language = 'c++',
