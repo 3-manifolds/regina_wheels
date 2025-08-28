@@ -207,7 +207,7 @@ regina_extension = Extension(
             'extinclude',
         ] + library_include_dirs(libraries),
     language = 'c++',
-    extra_compile_args=(['-fpermissive', '-std=c++17'] + platform_extra_compile_args),
+    extra_compile_args=(['-fpermissive', '-std=c++20'] + platform_extra_compile_args),
     libraries = ['gmp','gmpxx','m', 'bz2'],
     library_dirs = ['extlib'],
 
