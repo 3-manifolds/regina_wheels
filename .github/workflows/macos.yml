@@ -9,14 +9,14 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [macos-13, macos-14]
-        python_version: [38, 39, 310, 311, 312, 313]
+        os: [macos-15]
+        python_version: [38, 39, 310, 311, 312, 313, 314]
 
     steps:
       - uses: actions/checkout@v4
 
       - name: Build wheels
-        uses: pypa/cibuildwheel@v2.23.3
+        uses: pypa/cibuildwheel@v3.1.4
         env:
           CIBW_PRERELEASE_PYTHONS: False
           CIBW_BUILD: cp${{ matrix.python_version }}-*
