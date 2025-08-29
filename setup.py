@@ -384,6 +384,7 @@ class package_patch_regina(SystemCommand):
         'cd regina_*/python/testsuite; rm -rf basic*.cpp',
         'cd regina_*/python/testsuite; mv docstrings.out.' + suffix + ' docstrings.out',
         'cd regina_*/python/testsuite; mv repr.out.' + suffix + ' repr.out',
+        'cd regina_*/engine; rm -rf swift',
         ]
 
 class package_retrieve_tokyocabinet(CompoundCommand):
