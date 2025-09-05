@@ -3,9 +3,6 @@ from __future__ import print_function
 #__all__ = ['runTests']
 
 from .. import __dict__ as reginaDict
-
-# this is regina.open which would otherwise clobber the builtin open expected by the tests
-
 from . version import version
 
 import sys
@@ -19,7 +16,7 @@ from io import StringIO
 base_path = os.path.split(__file__)[0]
 testsuite_path = os.path.join(base_path, 'testsuite')
 
-def runSource(source, clobber_open):
+def runSource(source):
 
     original_stdout = sys.stdout
     original_displayhook = sys.displayhook
@@ -33,8 +30,9 @@ def runSource(source, clobber_open):
 
     try:
         globs = reginaDict.copy()
-        if not clobber_open:
-            del globs['open']
+        # this is regina.open which would otherwise clobber the
+        # builtin open expected by the tests
+        del globs['open']
 
         class ReginaWrapper:
             pass
@@ -55,8 +53,8 @@ def runSource(source, clobber_open):
 
     return fakeout.getvalue(), exception_info
 
-def runFile(path, clobber_open):
-    return runSource(open(path).read(), clobber_open)
+def runFile(path):
+    return runSource(open(path).read())
 
 def findTests():
     search_path = os.path.join(testsuite_path, '*.test')
@@ -67,8 +65,7 @@ def findTests():
 def runTest(testName, testFile):
     failed = ""
 
-    clobber_open = testName not in ['misc', 'snappea']
-    output, exception_info = runFile(testFile, clobber_open)
+    output, exception_info = runFile(testFile)
 
     baseline = open(testFile.replace('.test', '.out')).read()
 
