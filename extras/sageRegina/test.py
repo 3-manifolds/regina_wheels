@@ -3,6 +3,10 @@ from __future__ import print_function
 #__all__ = ['runTests']
 
 from .. import __dict__ as reginaDict
+
+# this is regina.open which would otherwise clobber the builtin open expected by the tests
+del reginaDict['open']
+
 from . version import version
 
 import sys
@@ -65,13 +69,6 @@ def runTest(testName, testFile):
     output, exception_info = runFile(testFile)
 
     baseline = open(testFile.replace('.test', '.out')).read()
-
-    if testName == 'misc':
-        # Last line is about open function which displays
-        # differently on different sytems, e.g., something like
-        # <boost.python.function at 0x34534345345>
-        output   = '\n'.join(  output.split('\n')[:-2])
-        baseline = '\n'.join(baseline.split('\n')[:-2])
 
     if testName == 'docstrings':
         output = re.subn(r'(\s*)__pybind11_module_local_([a-zA-Z0-9_-]+) = <capsule.*\.\.\.',
