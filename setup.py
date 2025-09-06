@@ -168,7 +168,7 @@ def regina_predicate(file_path):
         # directory which we should not include to avoid clashes
 
         file_name_base, ext = os.path.splitext(file_name)
-        return not ('nmz_' in file_name_base)
+        return ('nmz_polynomial' in file_name_base) or not ('nmz_' in file_name_base)
 
     if library_name == 'tons':
         # Stuff that is no longer supported and needs to be reimplemented.
