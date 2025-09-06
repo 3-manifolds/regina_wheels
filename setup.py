@@ -162,13 +162,12 @@ def regina_predicate(file_path):
     if library_name == 'unused':
         return False
 
-    # if library_name == 'libnormaliz':
-    #    # Normaliz needs special behavior.
-    #    # libnormaliz-templated includes other .cpp files in that
-    #    # directory which we should not include to avoid clashes
-    #
-    #    file_name_base, ext = os.path.splitext(file_name)
+    if library_name == 'libnormaliz':
+        # Normaliz needs special behavior.
+        # libnormaliz-templated includes other .cpp files in that
+        # directory which we should not include to avoid clashes
 
+        file_name_base, ext = os.path.splitext(file_name)
         return not ('nmz_' in file_name_base)
 
     if library_name == 'tons':
