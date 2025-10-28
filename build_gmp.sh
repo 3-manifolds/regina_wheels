@@ -48,5 +48,5 @@ fi
 
 ./configure --enable-cxx --with-pic --build=${BUILD_SYSTEM} --prefix=$(pwd)/local
 make install
-ln -s -F $(pwd)/local/lib/* ../extlib
-ln -s -F $(pwd)/local/include/* ../extinclude
+ln -s -F $(pwd)/local/lib/* ../extlib/
+ln -s -F $(pwd)/local/include/* ../extinclude/
