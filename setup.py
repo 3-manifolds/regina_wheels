@@ -329,7 +329,7 @@ class package_fix_version_regina_config(Command):
 class package_download_tokyocabinet(SystemCommand):
     # Because of network issues, I've just added this to the repo.
     # system_commands = ['cd /tmp; curl -O %s' % tokyocabinet_uri]
-    pass
+    system_commands = []
 
 class package_download_libxml(SystemCommand):
     system_commands = ['cd /tmp; curl -O %s' % libxml_uri]
